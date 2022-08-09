@@ -1,4 +1,4 @@
-TARGET = certservtest
+TARGET = certserv
 VERSION = $(shell git describe --tags)
 BUILD = $(shell date +"%F_%T_%Z")
 LEVEL = $(shell git log --pretty=format:"%H" --name-status HEAD^..HEAD | head -1)
@@ -10,8 +10,8 @@ all: build
 build:
 	go build -o $(TARGET)
 
-run:
-	go run $(TARGET).go
+test:
+	go test
 
 image:
 	docker build -f $(DOCKERFILE) -t $(DOCKERIMAGE) .

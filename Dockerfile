@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL name="certsrv"
+LABEL name="certserv"
 
 ENV PORT=8080
 ENV WORK=/work
@@ -8,10 +8,10 @@ ENV PATH=$WORK:$PATH
 
 RUN mkdir -p $WORK
 
-COPY certsrv $WORK
+COPY certserv $WORK
 
 EXPOSE $PORT
 
-CMD ["/work/certsrv"]
+CMD ["/work/certserv"]
 
 
