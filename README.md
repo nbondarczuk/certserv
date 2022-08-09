@@ -42,3 +42,22 @@ starting with the certificate existing validity start date.
 
 Removes the certificate.
 
+## Modular structure
+
+The following componenets are established so far:
+
+- main
+- config
+- router
+- controller
+- certificate
+- sequencer
+- timerange
+- datastore - an abstract type (interface) implemented as:
+  - In-memeory Cache
+  - File System 
+  - MongoDB 
+  - ETCD
+  - etc. (anything else, DynamoDB included)
+
+
