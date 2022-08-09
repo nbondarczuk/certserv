@@ -1,9 +1,6 @@
-// certserv.go
-package main
+// certserv is the main executable
 
-import (
-	"fmt"
-)
+package main
 
 func main() {
 
