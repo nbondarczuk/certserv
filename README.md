@@ -1,4 +1,4 @@
-# This is a simple CA server implementation
+# This is a simple CA microserver implementation
 
 ## Description of the functionality
 
@@ -47,17 +47,23 @@ Removes the certificate.
 The following componenets are established so far:
 
 - main
-- config
-- router
-- controller
-- certificate
-- sequencer
-- timerange
+- ca
+  - certificate
+- api
+  - model
+  - protocol
+  - server
+  - router
+  - controller
 - datastore - an abstract type (interface) implemented as:
   - In-memeory Cache
   - File System 
   - MongoDB 
   - ETCD
   - etc. (anything else, DynamoDB included)
+- utl
+  - config
+  - sequencer
+  - timerange  
 
 
