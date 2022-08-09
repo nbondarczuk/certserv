@@ -18,15 +18,21 @@ import (
 
 func main() {
 	// hostname for the certificate and the request
-	const host = "foo.com"
-
+	const (
+		host = "whavever.com"
+		org = "whatever.inc"
+	)
+	
 	// create a new cert for 'foo.com' to be used in the HTTPS server
-	certPEM, keyPEM := makeCert(host)
+	certPEM, keyPEM := makeCert(host, org)
 	cert, err := tls.X509KeyPair(certPEM, keyPEM)
 	if err != nil {
 		log.Fatal("tls.X509KeyPair: ", err)
 	}
 
+	fmt.Printf("PEM cert: %s\n", certPEM)
+	fmt.Printf("PEM key: %s\n", keyPEM)
+	
 	// start an HTTPS server with that cert
 	tlsConfig := &tls.Config{
 		Certificates: []tls.Certificate{cert},
@@ -39,7 +45,8 @@ func main() {
 	srv.Config.TLSConfig = tlsConfig
 	srv.StartTLS()
 	defer srv.Close()
-
+	fmt.Printf("Started server\n")
+	
 	// create a client for the request which has
 	// the cert as the only rootCA
 	rootCAs := x509.NewCertPool()
@@ -60,9 +67,10 @@ func main() {
 		log.Fatal("http.NewRequest: ", err)
 	}
 	req.Header.Set("Host", host)
-
+	
 	// this should work but always fails with
 	// Get https://127.0.0.1:49805: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "serial:1000")
+	fmt.Printf("Sending request to server: %X\n", req)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal("client.Do: ", err)
@@ -80,7 +88,7 @@ func main() {
 
 // makeCert creates a self-signed certificate for an HTTPS server
 // which is valid for 'host' for one minute.
-func makeCert(host string) (certPEM, keyPEM []byte) {
+func makeCert(host, org string) (certPEM, keyPEM []byte) {
 	priv, err := rsa.GenerateKey(rand.Reader, 1024)
 	if err != nil {
 		log.Fatal("rsa.GenerateKey: ", err)
@@ -89,7 +97,7 @@ func makeCert(host string) (certPEM, keyPEM []byte) {
 	template := x509.Certificate{
 		SerialNumber: big.NewInt(1000),
 		Subject: pkix.Name{
-			Organization: []string{"Acme Co"},
+			Organization: []string{org},
 		},
 		NotBefore: time.Now(),
 		NotAfter:  time.Now().Add(time.Minute),

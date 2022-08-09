@@ -1,4 +1,4 @@
-TARGET = certserv
+TARGET = certservtest
 VERSION = $(shell git describe --tags)
 BUILD = $(shell date +"%F_%T_%Z")
 LEVEL = $(shell git log --pretty=format:"%H" --name-status HEAD^..HEAD | head -1)
