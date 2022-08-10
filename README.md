@@ -1,4 +1,4 @@
-# This is a simple CA microserver implementation
+# This is a simple CA microservice
 
 ## Description of the functionality
 
