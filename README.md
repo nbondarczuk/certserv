@@ -10,9 +10,10 @@ which are encoded in the certificate.
 The certificates are stored in a persistent storage which can be:
 
 - in-memory cache
-- file ssytem
+- file sytem
 - MongoDB
 - ETCD
+- DynamoDB
 
 Another thing store in the persistent storage is the certificate seq no.
 This value is incremented every time the server issues a new certificate.
@@ -47,20 +48,20 @@ Removes the certificate.
 The following componenets are established so far:
 
 - main
+- model
 - ca
   - certificate
 - api
-  - model
   - protocol
   - server
   - router
-  - controller
+  - handler
 - datastore - an abstract type (interface) implemented as:
-  - In-memeory Cache
+  - In-memory Cache
   - File System 
   - MongoDB 
   - ETCD
-  - etc. (anything else, DynamoDB included)
+  - DynamoDB
 - utl
   - config
   - sequencer
